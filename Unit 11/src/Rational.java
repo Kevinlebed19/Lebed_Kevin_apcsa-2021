@@ -37,7 +37,9 @@ class Rational implements Comparable<Rational>
 
 	private void reduce()
 	{
-
+		int gcd = gcd(numerator, denominator);
+	    numerator =  numerator / gcd ;
+	    denominator = denominator/ gcd;
 
 
 	}
@@ -46,18 +48,25 @@ class Rational implements Comparable<Rational>
 	{
 
 
-		return 1;
+		return numTwo == 0 ? numOne : gcd(numTwo, numOne % numTwo);
 	}
 
 	public Object clone ()
 	{
-		return "";
+		Rational rational = new Rational();
+		return rational;
 	}
 
 
-	//ACCESSORS
-
-	//write get methods for numerator and denominator
+	public int getNumerator()
+	{
+		return numerator;
+	}
+	
+	public int getDenominator()
+	{
+		return denominator;
+	}
 	
 	
 	public boolean equals( Object obj)
