@@ -41,6 +41,7 @@ public class ElevensBoard extends Board {
 	 */
 	 public ElevensBoard() {
 	 	super(BOARD_SIZE, RANKS, SUITS, POINT_VALUES);
+	 	System.out.println("Kevin Lebed, P:3, 4/13/21");
 	 }
 
 	/**
@@ -54,10 +55,10 @@ public class ElevensBoard extends Board {
 	 */
 	@Override
 	public boolean isLegal(List<Integer> selectedCards) {
-		if(selectedCards.size() == 2) {
-			return containsPairSum11(selectedCards);
-		} else if(selectedCards.size() == 3) {
-			return containsJQK(selectedCards);
+		if(selectedCards.size() == 3) {
+			return containsTrioSum11(selectedCards);
+		} else if(selectedCards.size() == 2) {
+			return containsPairJQK(selectedCards);
 		} else {
 			return false;
 		}
@@ -74,7 +75,7 @@ public class ElevensBoard extends Board {
 	@Override
 	public boolean anotherPlayIsPossible() {
 		List<Integer> cIndexes = cardIndexes();
-		return containsPairSum11(cIndexes) || containsJQK(cIndexes);
+		return containsTrioSum11(cIndexes) || containsPairJQK(cIndexes);
 	}
 
 	/**
@@ -85,13 +86,16 @@ public class ElevensBoard extends Board {
 	 * @return true if the board entries in selectedCards
 	 *              contain an 11-pair; false otherwise.
 	 */
-	private boolean containsPairSum11(List<Integer> selectedCards) {
+	private boolean containsTrioSum11(List<Integer> selectedCards) {
 		for (int sk1 = 0; sk1 < selectedCards.size(); sk1++) {
 			int k1 = selectedCards.get(sk1).intValue();
 			for (int sk2 = sk1 + 1; sk2 < selectedCards.size(); sk2++) {
 				int k2 = selectedCards.get(sk2).intValue();
-				if(cardAt(k1).pointValue() + cardAt(k2).pointValue() == 11) {
-					return true;
+				for (int sk3 = sk2 + 1; sk3 < selectedCards.size(); sk3++) {
+					int k3 = selectedCards.get(sk3).intValue();
+					if(cardAt(k1).pointValue() + cardAt(k2).pointValue() + cardAt(k3).pointValue()  == 11) {
+						return true;
+					}
 				}
 			}
 		}
@@ -106,20 +110,23 @@ public class ElevensBoard extends Board {
 	 * @return true if the board entries in selectedCards
 	 *              include a jack, a queen, and a king; false otherwise.
 	 */
-	private boolean containsJQK(List<Integer> selectedCards) {
-		boolean foundJack = false;
-		boolean foundQueen = false;
-		boolean foundKing = false;
+	private boolean containsPairJQK(List<Integer> selectedCards) {
+		int foundJack = 0;
+		int foundQueen = 0;
+		int foundKing = 0;
 		for(Integer kObj : selectedCards) {
 			int k = kObj.intValue();
 			if (cardAt(k).rank().equals("jack")) {
-				foundJack = true;
+				foundJack++;
 			} else if (cardAt(k).rank().equals("queen")) {
-				foundQueen = true;
+				foundQueen++;
 			} else if (cardAt(k).rank().equals("king")) {
-				foundKing = true;
+				foundKing++;
 			}
 		}
-		return foundJack && foundQueen && foundKing;
+		if(foundJack==2) return true;
+		else if(foundQueen==2) return true;
+		else if(foundKing==2) return true;
+		else return false;
 	}
 }
