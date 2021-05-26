@@ -85,6 +85,84 @@ public class Picture extends SimplePicture
     
   }
   
+  // Lab Assessment method
+  public void blur (int x, int y, int w, int h) {
+	  System.out.println("Kevin Lebed; Period 3; 5/25/21");
+	  Pixel[][] pixels = this.getPixels2D();
+	  Pixel p1 = null;
+	  Pixel p2 = null;
+	  Pixel p3 = null;
+	  Pixel p4 = null;
+	  Pixel p5 = null;
+	  Pixel p6 = null;
+	  Pixel p7 = null;
+	  Pixel p8 = null;
+	  Pixel mid = null;
+	  int avgreen = 0;
+	  int avblue = 0;
+	  int avred = 0;
+	  for (int row = x; row < x+h; row++) {
+		  for (int col = y; col < y + w; col++) {
+			  if (row == 0 && col == 0) {
+				  p1 = pixels[row][col];
+				  p2 = pixels[row][col];
+				  p3 = pixels[row][col+1];
+				  p4 = pixels[row][col];
+				  mid = pixels[row][col];
+				  p5 = pixels[row][col+1];
+				  p6 = pixels[row+1][col];
+				  p7 = pixels[row+1][col];
+				  p8 = pixels[row+1][col+1];
+			  }
+			  else if (row == 0) {
+				  p1 = pixels[row][col-1];
+				  p2 = pixels[row][col];
+				  p3 = pixels[row][col+1];
+				  p4 = pixels[row][col-1];
+				  mid = pixels[row][col];
+				  p5 = pixels[row][col+1];
+				  p6 = pixels[row+1][col-1];
+				  p7 = pixels[row+1][col];
+				  p8 = pixels[row+1][col+1];
+			  }
+			  else if (col == 0) {
+				  p1 = pixels[row-1][col];
+				  p2 = pixels[row-1][col];
+				  p3 = pixels[row-1][col+1];
+				  p4 = pixels[row][col];
+				  mid = pixels[row][col];
+				  p5 = pixels[row][col+1];
+				  p6 = pixels[row+1][col];
+				  p7 = pixels[row+1][col];
+				  p8 = pixels[row+1][col+1];
+			  }
+			  else {
+				  p1 = pixels[row-1][col-1];
+				  p2 = pixels[row-1][col];
+				  p3 = pixels[row-1][col+1];
+				  p4 = pixels[row][col-1];
+				  mid = pixels[row][col];
+				  p5 = pixels[row][col+1];
+				  p6 = pixels[row+1][col-1];
+				  p7 = pixels[row+1][col];
+				  p8 = pixels[row+1][col+1];
+			  }
+			  avred = p1.getRed() + p2.getRed() + p3.getRed() + p4.getRed() + p5.getRed() 
+			  				+ p6.getRed() + p7.getRed() + p8.getRed() + mid.getRed();
+			  avblue = p1.getBlue() + p2.getBlue() + p3.getBlue() + p4.getBlue() + p5.getBlue() 
+				+ p6.getBlue() + p7.getBlue() + p8.getBlue() + mid.getBlue();
+			  avgreen = p1.getGreen() + p2.getGreen() + p3.getGreen() + p4.getGreen() + p5.getGreen() 
+				+ p6.getGreen() + p7.getGreen() + p8.getGreen() + mid.getGreen();
+			  avred = avred/9;
+			  avgreen = avgreen/9;
+			  avblue = avblue/9;
+			  mid.setRed(avred);
+			  mid.setGreen(avgreen);
+			  mid.setBlue(avblue);
+		  }
+	  }
+  }
+  
   /** Method to set the blue to 0 */
   public void zeroBlue()
   {
