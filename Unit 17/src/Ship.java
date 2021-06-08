@@ -36,7 +36,7 @@ public class Ship extends MovingThing
 		}
 		catch(Exception e)
 		{
-			System.out.print("Hello");
+			System.out.print("Can't obtain ship jpg");
 		}
 	}
 

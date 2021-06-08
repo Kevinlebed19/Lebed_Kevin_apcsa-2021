@@ -92,6 +92,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		if(keys[4] == true)
 		{
 			shots.add(new Ammo(ship.getX() + ship.getWidth() / 2, ship.getY(), speed));
+			 keys[4]=false;
 		}
 		//add in collision detection to see if Bullets hit the Aliens and if Bullets hit the Ship
 		if (horde.hit(ship) || gameover == true) {
